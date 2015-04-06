@@ -1,0 +1,9 @@
+Priorities: [H High] [M Medium] [L Low]
+Subcases can be represented with indentation.
+I'll also create issues of these tasks on the central repository.
+
+[H]: Display system RAM usage and total.
+[H]: Display USER, HOST, SHELL, TERM, perhaps any other easily accessible env. variables.
+[H]: Add a cute ASCII picture of Lain.
+	[M]: Test said ASCII picture in different environments.
+	[M]: Add the option to disable escape codes if needed.
