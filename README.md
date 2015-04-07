@@ -7,7 +7,7 @@ There are window managers that are less than this. For a script which reports sy
 
 Furthermore, `screenfetch` is designed to function on a great variety of platforms, so it's not always immediately clear what code affects the platform you're currently running on.
 
-`infornography` aims to remedy this. It is to be written entirely in Scheme and target one, or very few, platforms. This way we avoid needing excessive code to deal with the quirks of the many operating systems and distrobutions in circulation.
+`infornography` aims to remedy this. It is to be written entirely in Scheme and target one, or very few, platforms. This way we avoid needing excessive code to deal with the quirks of the many operating systems and distributions in circulation.
 
 ### Why Scheme?
 It's the most hackable language there is.
