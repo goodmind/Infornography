@@ -40,9 +40,9 @@
 (define string->nsize (λ (sizestr id)
 	(let ((size (string->number sizestr)))
 	(cond ((eq? id #\K) size)
-				((eq? id #\M) (/ size 1000))
-				((eq? id #\G) (/ (/ size 1000) 1000))
-				(else size)))))
+		((eq? id #\M) (/ size 1000))
+		((eq? id #\G) (/ (/ size 1000) 1000))
+		(else size)))))
 
 ; string to human readable size
 (define string->size (λ (sizestr id)
