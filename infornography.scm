@@ -1,4 +1,4 @@
-#!/usr/bin/csi -script
+#!/usr/bin/env csi
 
 ; Infornography
 
@@ -82,3 +82,4 @@
 
 ; and now we display the data...
 (dump data)
+(exit 0)
