@@ -36,7 +36,7 @@
 		(lambda (file)
 			(string->number 
 				(cadr (regex#string-search 
-					(string-append "Mem" value ":\\s+(.+)\\s+kB")
+					(string-append value ":\\s+(\\S+)\\s+kB")
 						(read-string #f file)))))))
 
 ; format bytes
@@ -53,9 +53,10 @@
 		(number->string (formatbytes size id)) (string id))))
 
 (define memory (λ (fmt)
-	(let* ((total (mem#find "Total")) (used (- total (mem#find "Available"))))
-		(string-append 
-			(number->size used fmt) "/" (number->size total fmt)))))
+	(let* ((total (mem#find "MemTotal")))
+		(let ((used (- (- (mem#find "MemTotal") (mem#find "MemFree")) (mem#find "Cached"))))
+			(string-append 
+				(number->size used fmt) "/" (number->size total fmt))))))
 
 ; eventually the whole program will be
 ; a call to `dump' that prints out the 
