@@ -29,25 +29,33 @@
 			(dump (cdr array)))))))
 
 
-; total memory in kb
-(define (mem#total)
+; get a memory value from meminfo
+; now 50% more reusable!
+(define (mem#find value)
 	(call-with-input-file "/proc/meminfo"
 		(lambda (file)
-			(cadr (regex#string-search "MemTotal:\\s+(.+) kB"
-				(read-string #f file))))))
+			(string->number 
+				(cadr (regex#string-search 
+					(string-append "Mem" value ":\\s+(.+)\\s+kB")
+						(read-string #f file)))))))
 
-; string to number representation of size
-(define string->nsize (λ (sizestr id)
-	(let ((size (string->number sizestr)))
-	(cond ((eq? id #\K) size)
+; format bytes
+(define formatbytes (λ (size id)
+	(cond 
+		((eq? id #\K) size)
 		((eq? id #\M) (/ size 1000))
 		((eq? id #\G) (/ (/ size 1000) 1000))
-		(else size)))))
+		(else size))))
 
-; string to human readable size
-(define string->size (λ (sizestr id)
-	(string-append
-		(number->string (string->nsize sizestr id)) (string id))))
+; number to human-readable memory representation
+(define number->size (λ (size id)
+	(string-append 
+		(number->string (formatbytes size id)) (string id))))
+
+(define memory (λ (fmt)
+	(let* ((total (mem#find "Total")) (used (- total (mem#find "Available"))))
+		(string-append 
+			(number->size used fmt) "/" (number->size total fmt)))))
 
 ; eventually the whole program will be
 ; a call to `dump' that prints out the 
@@ -58,7 +66,7 @@
                   .......               
               ...............           " ,($ USER) "@" ,(get-host-name) "
             ....................        Shell: " ,($ SHELL) "
-          .........................     Memory: " ,(string->size (mem#total) #\M) "
+          .........................     Memory: " ,(memory #\M) " 
          ...........................    
         .............................   
        ...............................  
