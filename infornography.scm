@@ -41,11 +41,12 @@
 
 ; format bytes
 (define formatbytes (λ (size id)
-	(cond 
-		((eq? id #\K) size)
-		((eq? id #\M) (/ size 1000))
-		((eq? id #\G) (/ (/ size 1000) 1000))
-		(else size))))
+	(inexact->exact (round
+		(cond 
+			((eq? id #\K) size)
+			((eq? id #\M) (/ size 1000))
+			((eq? id #\G) (/ (/ size 1000) 1000))
+			(else size))))))
 
 ; number to human-readable memory representation
 (define number->size (λ (size id)
