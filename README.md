@@ -21,3 +21,8 @@ No. But I'd rather write something small that I can edit later than learn the  c
 ### Why does the script have a ton of output before the art?
 Because there's no good standard for #! (shebang) lines.
 To fix this, you can compile the script to a binary `csc infornography.scm` or create your own wrapper that calls `csi -script infornography.scm`
+
+### Known issues/notes
+This script tries to be compatible with both GNU/Linux and FreeBSD.
+- On some platforms the 'regex' egg is required. This can be installed
+via `chicken-install regex`.
