@@ -28,6 +28,8 @@
 				(display "Unknown."))
 			(dump (cdr array)))))))
 
+(define os (λ ()
+	(car (system-information))))
 
 ; get a memory value from meminfo
 ; now 50% more reusable!
@@ -69,7 +71,7 @@
               ...............           " ,($ USER) "@" ,(get-host-name) "
             ....................        Shell: " ,($ SHELL) "
           .........................     Memory: " ,(memory #\M) " 
-         ...........................    
+         ...........................    OS: " ,(os) "
         .............................   
        ...............................  
        ..............x................  
