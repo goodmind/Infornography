@@ -8,72 +8,72 @@
 ; not strictly necessary but it's cute
 ; fuck the haters, also use UTF-8
 (define-syntax  λ 
-	(syntax-rules ()
-		((_ . _) (lambda . _))))
+  (syntax-rules ()
+    ((_ . _) (lambda . _))))
 
 ; syntactic cheat
 (define-syntax $
-	(syntax-rules ()
-		((_ var) (get-environment-variable
-							(symbol->string (quote var))))))
+  (syntax-rules ()
+    ((_ var) (get-environment-variable
+              (symbol->string (quote var))))))
 
 ; could also have been a call to map with a lambda
 ; but, eh, I might do a comparison later
 (define dump 
-	(λ (array)
-		(if (null? array)
-				#t ; suspend
-				((λ ()
-					 (if (string? (car array))
-							 (display (car array))
-							 (display "Unknown."))
-					 (dump (cdr array)))))))
+  (λ (array)
+    (if (null? array)
+        #t ; suspend
+        ((λ ()
+           (if (string? (car array))
+               (display (car array))
+               (display "Unknown."))
+           (dump (cdr array)))))))
 
 (define os 
-	(λ ()
-		(car (system-information))))
+  (λ ()
+    (car (system-information))))
 
 ; read a line from meminfo
 (define (meminfo#find value)
-	(call-with-input-file "/proc/meminfo"
-		(lambda (file)
-			(string->number 
-			 (cadr (regex#string-search 
-							(string-append value ":\\s+(\\S+)\\s+kB")
-							(read-string #f file)))))))
+  (call-with-input-file "/proc/meminfo"
+    (lambda (file)
+      (string->number 
+       (cadr (regex#string-search 
+              (string-append value ":\\s+(\\S+)\\s+kB")
+              (read-string #f file)))))))
 
 ; read memory usage from meminfo
 (define meminfo 
-	(λ (fmt)
-		(let* ((total (meminfo#find "MemTotal")))
-			(let ((used (- (- (meminfo#find "MemTotal") (meminfo#find "MemFree")) (meminfo#find "Cached"))))
-				(string-append 
-				 (number->size used fmt) "/" (number->size total fmt))))))
+  (λ (fmt)
+    (let* ((total (meminfo#find "MemTotal")))
+      (let ((used (- (- (meminfo#find "MemTotal") (meminfo#find "MemFree")) (meminfo#find "Cached"))))
+        (string-append 
+         (number->size used fmt) "/" (number->size total fmt))))))
 
 (define memory
-	(λ (fmt)
-		(cond
-		 ((string-ci=? (os) "linux") (meminfo fmt))
-		 ((string-ci=? (os) "freebsd") (meminfo fmt))
-		 (else #f))))
-		
-		
-		
+  (λ (fmt)
+    (cond
+     ((string-ci=? (os) "linux") (meminfo fmt))
+     ((string-ci=? (os) "freebsd") (meminfo fmt))
+     (else #f))))
+    
+    
+    
 ; format bytes
 (define formatbytes 
-	(λ (size id)
-		(inexact->exact (round
-										 (cond 
-											((eq? id #\K) size)
-											((eq? id #\M) (/ size 1000))
-											((eq? id #\G) (/ (/ size 1000) 1000))
-											(else size))))))
+  (λ (size id)
+    (inexact->exact (round
+                     (cond 
+                      ((eq? id #\K) size)
+                      ((eq? id #\M) (/ size 1000))
+                      ((eq? id #\G) (/ (/ size 1000) 1000))
+                      (else size))))))
 
 ; number to human-readable memory representation
 (define number->size 
-	(λ (size id)
-		(string-append 
-		 (number->string (formatbytes size id)) (string id))))
+  (λ (size id)
+    (string-append 
+     (number->string (formatbytes size id)) (string id))))
 
 ; eventually the whole program will be
 ; a call to `dump' that prints out the 
