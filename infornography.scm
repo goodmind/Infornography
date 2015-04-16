@@ -69,11 +69,20 @@
             (λ (fp)
                (read-string #f fp))))))))    
 
+(define sysctl#osx
+  (λ ()
+    (let ((regex "machdep.cpu.brand_string:\\s+(.+)"))
+      (cadr (regex#string-search regex
+        (call-with-input-pipe "sysctl -a"
+          (λ (data) (read-string #f data))))))))
+
 ; calls appropriate CPU function
 (define cpu
   (λ ()
      (cond 
       ((string-ci=? (os) "linux") (cpuinfo))
+			((string-ci=? (os) "freebsd") (cpuinfo))
+      ((string-ci=? (os) "darwin") (sysctl#osx))
       (else #f))))
         
 ; format bytes
