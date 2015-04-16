@@ -58,6 +58,23 @@
      ((string-ci=? (os) "linux") (meminfo fmt))
      ((string-ci=? (os) "freebsd") (meminfo fmt))
      (else #f))))
+
+; cpuinfo-based cpu model reporting
+(define cpuinfo
+	(λ ()
+		 (let ((regex "model name\\s+:\\s+(.+)"))
+			 (cadr
+				(regex#string-search regex
+				  (call-with-input-file "/proc/cpuinfo"
+            (λ (fp)
+							 (read-string #f fp))))))))		 
+
+; calls appropriate CPU function
+(define cpu
+	(λ ()
+		 (cond 
+			((string-ci=? (os) "linux") (cpuinfo))
+			(else #f))))
         
 ; format bytes
 (define formatbytes 
@@ -87,7 +104,7 @@
           .........................     Memory: " ,(memory #\M) " 
          ...........................    OS: " ,(os) "
         .............................   Terminal: " ,($ TERM) "
-       ...............................  
+       ...............................  CPU: " ,(cpu) "
        ..............x................  
        ............xo@................  
        ...........xoo@xxx.............  
