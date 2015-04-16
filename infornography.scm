@@ -61,20 +61,20 @@
 
 ; cpuinfo-based cpu model reporting
 (define cpuinfo
-	(λ ()
-		 (let ((regex "model name\\s+:\\s+(.+)"))
-			 (cadr
-				(regex#string-search regex
-				  (call-with-input-file "/proc/cpuinfo"
+  (λ ()
+     (let ((regex "model name\\s+:\\s+(.+)"))
+       (cadr
+        (regex#string-search regex
+          (call-with-input-file "/proc/cpuinfo"
             (λ (fp)
-							 (read-string #f fp))))))))		 
+               (read-string #f fp))))))))    
 
 ; calls appropriate CPU function
 (define cpu
-	(λ ()
-		 (cond 
-			((string-ci=? (os) "linux") (cpuinfo))
-			(else #f))))
+  (λ ()
+     (cond 
+      ((string-ci=? (os) "linux") (cpuinfo))
+      (else #f))))
         
 ; format bytes
 (define formatbytes 
