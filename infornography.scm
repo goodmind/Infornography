@@ -50,15 +50,15 @@
         (string-append 
          (number->size used fmt) "/" (number->size total fmt))))))
 
+; calls appropriate memory function based
+; upon reported OS
 (define memory
   (λ (fmt)
     (cond
      ((string-ci=? (os) "linux") (meminfo fmt))
      ((string-ci=? (os) "freebsd") (meminfo fmt))
      (else #f))))
-    
-    
-    
+        
 ; format bytes
 (define formatbytes 
   (λ (size id)
