@@ -13,8 +13,8 @@
 
 (set-read-syntax! #\$
   (λ (port)
-		`(get-environment-variable
-			(symbol->string (quote ,(read port))))))
+    `(get-environment-variable
+      (symbol->string (quote ,(read port))))))
 
 ; could also have been a call to map with a lambda
 ; but, eh, I might do a comparison later
@@ -80,7 +80,7 @@
   (λ ()
      (cond 
       ((string-ci=? (os) "linux") (cpuinfo))
-			((string-ci=? (os) "freebsd") (cpuinfo))
+      ((string-ci=? (os) "freebsd") (cpuinfo))
       ((string-ci=? (os) "darwin") (sysctl#osx))
       (else #f))))
         
