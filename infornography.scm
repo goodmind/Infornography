@@ -11,11 +11,10 @@
   (syntax-rules ()
     ((_ . _) (lambda . _))))
 
-; syntactic cheat
-(define-syntax $
-  (syntax-rules ()
-    ((_ var) (get-environment-variable
-              (symbol->string (quote var))))))
+(set-read-syntax! #\$
+  (λ (port)
+		`(get-environment-variable
+			(symbol->string (quote ,(read port))))))
 
 ; could also have been a call to map with a lambda
 ; but, eh, I might do a comparison later
@@ -108,11 +107,11 @@
 
 (define data `("
                   .......               
-              ...............           " ,($ USER) "@" ,(get-host-name) "
-            ....................        Shell: " ,($ SHELL) "
+              ...............           " ,$USER "@" ,(get-host-name) "
+            ....................        Shell: " ,$SHELL "
           .........................     Memory: " ,(memory #\M) " 
          ...........................    OS: " ,(os) "
-        .............................   Terminal: " ,($ TERM) "
+        .............................   Terminal: " ,$TERM "
        ...............................  CPU: " ,(cpu) "
        ..............x................  
        ............xo@................  
