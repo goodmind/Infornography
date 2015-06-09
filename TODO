@@ -2,8 +2,5 @@ Priorities: [H High] [M Medium] [L Low]
 Subcases can be represented with indentation.
 I'll also create issues of these tasks on the central repository.
 
-[H]: Display system RAM usage and total.
-		 - Done on GNU/Linux.
-		 - Needs implementing on OSX and FreeBSD with vmstat.
-[L]: Color support.
-		 - If this is going to be a mess on each platform, forget about it.
+[H]
+        - Port to Racket and abandon Chicken
