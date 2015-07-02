@@ -15,14 +15,12 @@ It's the most hackable language there is.
 ### Does this really matter so much?
 No. But I'd rather write something small that I can edit later than learn the  codebase of `screenfetch`. It's also something to do.
 
+### Does it compile?
+`raco exe infornography.rkt` will build a native binary.
+I might put some up somewhere in the future, maybe.
+
 ### What about Archey?
 `archey` seems to follow more closely the principles of KISS, however it's designed only for Arch Linux. We'd like to be a little more broad, but just a little.
 
-### Why does the script have a ton of output before the art?
-Because there's no good standard for #! (shebang) lines.
-To fix this, you can compile the script to a binary `csc infornography.scm` or create your own wrapper that calls `csi -script infornography.scm`
-
 ### Known issues/notes
-This script tries to be compatible with both GNU/Linux and FreeBSD.
-- On some platforms the 'regex' egg is required. This can be installed
-via `chicken-install regex`.
+- OSX and *BSD support has been dropped for now, seperate scripts for different systems will be made soon.
