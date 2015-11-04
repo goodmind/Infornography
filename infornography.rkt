@@ -1,6 +1,32 @@
 #!/usr/bin/env racket
 #lang racket
 
+(define ESC_SEQ
+  (string-trim "\e["))
+
+(define (color?)
+  (equal? (first (port->lines (car (process "tput colors")))) "256"))
+
+(define (colorize escape)
+  (if (color?)
+    (string-append ESC_SEQ escape)
+    (string-trim "")))  
+
+(define (COL_RESET)
+  (colorize "0m"))
+
+(define (COL_SKIN)
+  (colorize "38;5;224m"))
+
+(define (COL_HAIR)
+  (colorize "38;5;240m"))
+
+(define (COL_BOLD)
+  (colorize "1m"))
+
+(define (COL_YELLOW)
+  (colorize "38;5;226m"))
+
 (define-syntax $
   (syntax-rules ()
     ((_ v)
@@ -47,27 +73,30 @@
   (string-trim (-> "uname -s")))
 
 (define data `("
-                  .......               
-              ...............           " ,($ USER) "@" ,(hostname) "
-            ....................        Shell: " ,($ SHELL) "
-          .........................     Memory: " ,(memory) "
-         ...........................    OS: " ,(os) "
-        .............................   Terminal: " ,($ TERM) "
-       ...............................  CPU: " ,(cpu) "
-       ..............x................  
-       ............xo@................  
-       ...........xoo@xxx.............  
-      ........o@oxxoo@@@@@@x..xx.....   
-       .....xo@oo...o@@@@@@x...o\\./.    
-       ....o@@@@@@@@@@@@@@@@@@@o.\\..    
-       .....x@@@@@@@@@@@o@@@@@@x/.\\.    
-        ......@@@@@@@@@@o@@@@@x....     
-        .......@@@@@@@@o@@@@o......     
-             .x@@@@@@@@@@ox.. .....     
-            .@@@@@@@ooooxxxo.   ...     
-         ...x@@@@@@@@@ooooo@... ..      
-      ........@@@@@@@....xoo........    
-   .............@@@.................... 
+" ,(COL_HAIR) "                  .......               " ,(COL_RESET) "
+" ,(COL_HAIR) "              ...............           " ,(COL_RESET) " " ,($ USER) "@" ,(hostname) "
+" ,(COL_HAIR) "            ....................        " ,(COL_RESET) " " ,(COL_BOLD) "Shell" ,(COL_RESET) ": " ,($ SHELL) "
+" ,(COL_HAIR) "          .........................     " ,(COL_RESET) " " ,(COL_BOLD) "Memory" ,(COL_RESET) ": " ,(memory) "
+" ,(COL_HAIR) "         ...........................    " ,(COL_RESET) " " ,(COL_BOLD) "OS" ,(COL_RESET) ": " ,(os) "
+" ,(COL_HAIR) "        .............................   " ,(COL_RESET) " " ,(COL_BOLD) "Terminal" ,(COL_RESET) ": " ,($ TERM) "
+" ,(COL_HAIR) "       ...............................  " ,(COL_RESET) " " ,(COL_BOLD) "CPU" ,(COL_RESET) ": " ,(cpu) "
+" ,(COL_HAIR) "       .............." ,(COL_SKIN) "x" ,(COL_HAIR) "................  " ,(COL_RESET) " " ,(COL_BOLD) "WM" ,(COL_RESET) ": " ,($ XDG_CURRENT_DESKTOP) "
+" ,(COL_HAIR) "       ............" ,(COL_SKIN) "xo@" ,(COL_HAIR) "................  
+       ..........." ,(COL_SKIN) "xoo@xxx" ,(COL_HAIR) ".............  
+       ........" ,(COL_SKIN) "o@oxxoo@@@@@@x.." ,(COL_HAIR) "xx.....   
+       ....." ,(COL_SKIN) "xo@oo...o@@@@@@x..." ,(COL_HAIR) "o" ,(COL_YELLOW) "\\" 
+,(COL_HAIR) "." ,(COL_YELLOW) "/" ,(COL_HAIR) ".    
+       ...." ,(COL_SKIN) "o@@@@@@@@@@@@@@@@@@@o" ,(COL_HAIR) "." ,(COL_YELLOW) "\\" 
+,(COL_HAIR) "..    
+       ....." ,(COL_SKIN) "x@@@@@@@@@@@o@@@@@@" ,(COL_HAIR) "x" ,(COL_YELLOW) "/" 
+,(COL_HAIR) "." ,(COL_YELLOW) "\\" ,(COL_HAIR) ".    
+        ......" ,(COL_SKIN) "@@@@@@@@@@o@@@@@" ,(COL_HAIR) "x....     
+        ......." ,(COL_SKIN) "@@@@@@@@o@@@@o" ,(COL_HAIR) "......     
+             ." ,(COL_SKIN) "x@@@@@@@@@@ox" ,(COL_HAIR) ".. .....     
+            ." ,(COL_SKIN) "@@@@@@@ooooxxxo" ,(COL_HAIR) ".   ...     
+         ..." ,(COL_SKIN) "x@@@@@@@@@ooooo@" ,(COL_HAIR) "... ..      
+      ........" ,(COL_SKIN) "@@@@@@@....xoo" ,(COL_HAIR) "........    
+   ............. " ,(COL_SKIN) "@@@" ,(COL_HAIR) ".................... 
 ........................................
 ....................x..x................
 \n"))
