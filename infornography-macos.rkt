@@ -16,30 +16,29 @@
   (call-with-input-file file port->string))
 
 (define (cpu)
-  (string-normalize-spaces (-> "sysctl -n machdep.cpu.brand_string")))
+  (string-trim (-> "sysctl -n machdep.cpu.brand_string")))
 
 (define (memory:make-pattern name)
   (pregexp (string-append name ":[[:space:]]+([[:digit:]]+)")))
 
 (define (memory:information)
   (let* ((mkpattern memory:make-pattern)
-         (meminfo (-> "vm_stat"))        
-         (total  
-           (number->string 
-             (/ (string->number (string-normalize-spaces (-> "sysctl -n hw.memsize"))) 4096)))
+         (meminfo (-> "vm_stat"))
+         (total-pages (/ (string->number (string-trim (-> "sysctl -n hw.memsize"))) 4096))        
+         (total  (number->string total-pages))
          (free   (cadr (regexp-match (mkpattern "Pages free") meminfo)))
-         (cached (cadr (regexp-match (mkpattern "Pages speculative") meminfo))))
+         (speculative (cadr (regexp-match (mkpattern "Pages speculative") meminfo))))
     
     (map (λ (num)
            (round             
             (/ (/ (* (string->number num) 4096) 1024) 1024)))
-         `(,total ,free ,cached))))
+         `(,total ,free ,speculative))))
 
 (define (memory)
   (let* ((total  (car (memory:information)))
          (free   (cadr (memory:information)))
-         (cached (caddr (memory:information)))
-         (used  (- total free)))
+         (speculative (caddr (memory:information)))
+         (used  (- total (+ free speculative))))
     (let ((sforms (map number->string `(,used ,total))))
       (string-join `(,(car sforms) "M/" ,(cadr sforms) "M") ""))))
 
