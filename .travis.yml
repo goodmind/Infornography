@@ -1,3 +1,4 @@
+language: c
 sudo: false
 notifications:
   email: false
@@ -20,7 +21,7 @@ script:
 
 deploy:
   provider: releases
-  apikey:
+  api_key:
     secure: "GUPwC5Zzh0FWoSQ4kBVHhOQbMjZ6UCAHF8Eh2B9lXlWgPNR1vrQUQGQNaF/lYPZYZ80cyrJnNF7smUP2ejhFOO9j5O9CKs4tFPohrQ0pTzE9k0H5dImMdqxMgzT1sCcqLeCT3sOA8ByEtjeTT3ANnJ7rlEXzfe
 CD604uVvsv8ZfBrkT2M5WVTv08awqdThmA9gryFjuP4e+i/eA/+JPAxP46iUjdG/0SbKdi1YEhxrG/FPanzsqUR5JZ/WXKPhL7a8e1zF23/xWTG9XB422H1N4zskrWJI/TCjeSWg440/tis2b66gRNimN11BgOj6W7BRg1Qz4
 Y6/3GqyTtdByZSjrvGB3nUnqwN/kzvzyJPniXAERwCOSmG55vI5bJE8WVaW2zo/NOdJDtdHNMWUIbmrSmOIkSIY1xkGxRqwUZuVQG2cqBSlR96+JNi9Sw7tKfbqvxs5TnRpNKYiP6nXce/nd8rlNCoqP+YlJHUfLU0Px4Vmo2
