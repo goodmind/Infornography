@@ -1,13 +1,6 @@
 Infornography
 =============
 
-<img 
-  alt="Infornography" 
-  align="right"
-  width="50%" 
-  padding="5px" 
-  src="http://hnng.moe/f/F21" />
-
 The problem? `screenfetch` is more than 3.8k standard lines of code.
 
 There are window managers that are less than this. For a script which reports system information, this is simply too large and needlessly complex.
@@ -30,4 +23,14 @@ I might put some up somewhere in the future, maybe.
 `archey` seems to follow more closely the principles of KISS, however it's designed only for Arch Linux. We'd like to be a little more broad, but just a little.
 
 ### Known issues/notes
-- OSX and *BSD support has been dropped for now, seperate scripts for different systems will be made soon.
+- OSX and *BSD support has been dropped for now, seperate scripts for    different systems will be made soon.
+
+<center>
+<img
+  alt="Infornography macOS"
+  src="http://hnng.moe/f/F21" />
+<img
+  alt="Infornography"
+  width="89%"
+  src="http://hnng.moe/f/F23" />
+</center>
