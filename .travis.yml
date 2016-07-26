@@ -1,0 +1,36 @@
+sudo: false
+notifications:
+  email: false
+matrix:
+  include:
+    - os: linux
+      env:
+        - RACKET_VERSION=6.6
+        - RACKET_DIR=~/racket
+    - os: osx
+os:
+  - linux
+  - osx
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update             ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install racket; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/greghendershott/travis-racket.git; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat travis-racket/install-racket.sh | bash; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; export PATH="${RACKET_DIR}/bin:${PATH}"; fi
+
+script:
+  - bash ./travis.sh
+
+deploy:
+  provider: releases
+  apikey:
+    secure: "GUPwC5Zzh0FWoSQ4kBVHhOQbMjZ6UCAHF8Eh2B9lXlWgPNR1vrQUQGQNaF/lYPZYZ80cyrJnNF7smUP2ejhFOO9j5O9CKs4tFPohrQ0pTzE9k0H5dImMdqxMgzT1sCcqLeCT3sOA8ByEtjeTT3ANnJ7rlEXzfe
+CD604uVvsv8ZfBrkT2M5WVTv08awqdThmA9gryFjuP4e+i/eA/+JPAxP46iUjdG/0SbKdi1YEhxrG/FPanzsqUR5JZ/WXKPhL7a8e1zF23/xWTG9XB422H1N4zskrWJI/TCjeSWg440/tis2b66gRNimN11BgOj6W7BRg1Qz4
+Y6/3GqyTtdByZSjrvGB3nUnqwN/kzvzyJPniXAERwCOSmG55vI5bJE8WVaW2zo/NOdJDtdHNMWUIbmrSmOIkSIY1xkGxRqwUZuVQG2cqBSlR96+JNi9Sw7tKfbqvxs5TnRpNKYiP6nXce/nd8rlNCoqP+YlJHUfLU0Px4Vmo2
+TGvuPA0vJPPprB1rFgtbr3TlZOcVun4m/jyLUVdurHxNmCbHv7GJgr7sC5tVdBzyJpZKdpZMNRcKFkWOTbU8RM8sVUIlNAD9zRUA2FoSRRWKwptcpkMQ2ZnG/DcBl+zXJJSWUS7LJ1Bz95P7aHapAgbHFDYbrkWv3s+vr0/CR
+WhdhJ+3Ssx1ZAIJb7c="
+  file: "*.tar.gz"
+  file_glob: true
+  skip_cleanup: true
+  on:
+    tags: true
