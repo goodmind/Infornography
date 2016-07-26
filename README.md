@@ -1,6 +1,13 @@
 Infornography
 =============
 
+<img 
+  alt="Infornography" 
+  align="right"
+  width="50%" 
+  padding="5px" 
+  src="http://hnng.moe/f/F21" />
+
 The problem? `screenfetch` is more than 3.8k standard lines of code.
 
 There are window managers that are less than this. For a script which reports system information, this is simply too large and needlessly complex.
