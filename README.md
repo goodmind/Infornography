@@ -9,7 +9,7 @@ Furthermore, `screenfetch` is designed to function on a great variety of platfor
 
 `infornography` aims to remedy this. It is to be written entirely in Scheme and target one, or very few, platforms. This way we avoid needing excessive code to deal with the quirks of the many operating systems and distributions in circulation.
 
-### Why Scheme?
+### Why Racket?
 It's the most hackable language there is.
 
 ### Does this really matter so much?
