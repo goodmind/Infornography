@@ -12,12 +12,22 @@ compress () {
   tar -czf infornography-$PLATFORM-$TAG.tar.gz dist && echo 'Compressed';
 }
 
+test_darwin () {
+  racket infornography-macos.rkt
+}
+
+test_linux () {
+  racket infornoraphy.rkt
+}
+
 build_darwin () {
+  test_darwin;
   raco exe -o build/infornography infornography-macos.rkt;
   export PLATFORM="darwin"
 }
 
 build_linux () {
+  test_linux;
   raco exe -o build/infornography infornography.rkt;
   export PLATFORM="linux"
 }
