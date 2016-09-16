@@ -8,27 +8,27 @@ clean () {
 }
 
 compress () {
-  raco distribute dist build/infornography && echo 'Building successful';
+  raco distribute dist build/infornography && echo 'Distributing successful';
   tar -czf infornography-$PLATFORM-$TAG.tar.gz dist && echo 'Compressed';
 }
 
 test_darwin () {
-  racket infornography-macos.rkt
+  racket infornography-macos.rkt && echo 'Testing successful';
 }
 
 test_linux () {
-  racket infornoraphy.rkt
+  racket infornoraphy.rkt && echo 'Testing successful';
 }
 
 build_darwin () {
   test_darwin;
-  raco exe -o build/infornography infornography-macos.rkt;
+  raco exe -o build/infornography infornography-macos.rkt && echo 'Building successful';
   export PLATFORM="darwin"
 }
 
 build_linux () {
   test_linux;
-  raco exe -o build/infornography infornography.rkt;
+  raco exe -o build/infornography infornography.rkt && echo 'Building successful';
   export PLATFORM="linux"
 }
 
