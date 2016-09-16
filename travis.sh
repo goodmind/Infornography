@@ -17,7 +17,7 @@ test_darwin () {
 }
 
 test_linux () {
-  racket infornoraphy.rkt && echo 'Testing successful';
+  racket infornography.rkt && echo 'Testing successful';
 }
 
 build_darwin () {
