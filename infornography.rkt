@@ -1,5 +1,7 @@
 #!/usr/bin/env racket
-#lang racket
+#lang racket/base
+
+(require racket/port racket/system racket/string racket/list)
 
 (define-syntax $
   (syntax-rules ()
