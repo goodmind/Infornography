@@ -23,7 +23,7 @@ I might put some up somewhere in the future, maybe.
 `archey` seems to follow more closely the principles of KISS, however it's designed only for Arch Linux. We'd like to be a little more broad, but just a little.
 
 ### Known issues/notes
-- OSX and *BSD support has been dropped for now, seperate scripts for    different systems will be made soon.
+- *BSD support has been dropped for now, seperate scripts for    different systems will be made soon.
 
 <center>
 <img
