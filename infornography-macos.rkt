@@ -1,5 +1,7 @@
 #!/usr/bin/env racket
-#lang racket
+#lang racket/base
+
+(require racket/port racket/system racket/string racket/list)
 
 (define-syntax $
   (syntax-rules ()
@@ -15,6 +17,9 @@
 (define (filename->string file)
   (call-with-input-file file port->string))
 
+(define (get-match pattern string)
+  (cadr (regexp-match pattern string)))
+
 (define (cpu)
   (string-trim (-> "sysctl -n machdep.cpu.brand_string")))
 
@@ -24,49 +29,50 @@
 (define (memory:information)
   (let* ((mkpattern memory:make-pattern)
          (meminfo (-> "vm_stat"))
-         (total-pages (/ (string->number (string-trim (-> "sysctl -n hw.memsize"))) 4096))        
+         (total-pages (/ (string->number (string-trim (-> "sysctl -n hw.memsize"))) 4096))
          (total  (number->string total-pages))
-         (free   (cadr (regexp-match (mkpattern "Pages free") meminfo)))
-         (speculative (cadr (regexp-match (mkpattern "Pages speculative") meminfo))))
-    
+         (free   (get-match (mkpattern "Pages free") meminfo))
+         (speculative (get-match (mkpattern "Pages speculative") meminfo)))
+
     (map (λ (num)
-           (round             
+           (round
             (/ (/ (* (string->number num) 4096) 1024) 1024)))
-         `(,total ,free ,speculative))))
+         (list total free speculative))))
 
 (define (memory)
-  (let* ((total  (car (memory:information)))
-         (free   (cadr (memory:information)))
-         (speculative (caddr (memory:information)))
+  (let* ((total  (first (memory:information)))
+         (free   (second (memory:information)))
+         (speculative (third (memory:information)))
          (used  (- total (+ free speculative))))
-    (let ((sforms (map number->string `(,used ,total))))
-      (string-join `(,(car sforms) "M/" ,(cadr sforms) "M") ""))))
+    (string-join (list (number->string used) "M/"
+                       (number->string total) "M")
+                 "")))
 
 (define (os)
   (string-trim (-> "uname -s")))
 
-(define data `("
-                  .......               
-              ...............           " ,($ USER) "@" ,(hostname) "
-            ....................        Shell: " ,($ SHELL) "
-          .........................     Memory: " ,(memory) "
-         ...........................    OS: " ,(os) "
-        .............................   Terminal: " ,($ TERM) "
-       ...............................  CPU: " ,(cpu) "
-       ..............x................  
-       ............xo@................  
-       ...........xoo@xxx.............  
-      ........o@oxxoo@@@@@@x..xx.....   
-       .....xo@oo...o@@@@@@x...o\\./.    
-       ....o@@@@@@@@@@@@@@@@@@@o.\\..    
-       .....x@@@@@@@@@@@o@@@@@@x/.\\.    
-        ......@@@@@@@@@@o@@@@@x....     
-        .......@@@@@@@@o@@@@o......     
-             .x@@@@@@@@@@ox.. .....     
-            .@@@@@@@ooooxxxo.   ...     
-         ...x@@@@@@@@@ooooo@... ..      
-      ........@@@@@@@....xoo........    
-   .............@@@.................... 
+(define data (list "
+                  .......
+              ...............           " ($ USER) "@" (hostname) "
+            ....................        Shell: " ($ SHELL) "
+          .........................     Memory: " (memory) "
+         ...........................    OS: " (os) "
+        .............................   Terminal: " ($ TERM) "
+       ...............................  CPU: " (cpu) "
+       ..............x................
+       ............xo@................
+       ...........xoo@xxx.............
+      ........o@oxxoo@@@@@@x..xx.....
+       .....xo@oo...o@@@@@@x...o\\./.
+       ....o@@@@@@@@@@@@@@@@@@@o.\\..
+       .....x@@@@@@@@@@@o@@@@@@x/.\\.
+        ......@@@@@@@@@@o@@@@@x....
+        .......@@@@@@@@o@@@@o......
+             .x@@@@@@@@@@ox.. .....
+            .@@@@@@@ooooxxxo.   ...
+         ...x@@@@@@@@@ooooo@... ..
+      ........@@@@@@@....xoo........
+   .............@@@....................
 ........................................
 ....................x..x................
 \n"))
