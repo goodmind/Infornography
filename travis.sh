@@ -8,9 +8,8 @@ clean () {
 }
 
 compress () {
-  raco distribute dist build/infornography;
-  tar -czf infornography-$PLATFORM-$TAG.tar.gz dist;
-  echo 'Building successful';
+  raco distribute dist build/infornography && echo 'Building successful';
+  tar -czf infornography-$PLATFORM-$TAG.tar.gz dist && echo 'Compressed';
 }
 
 build_darwin () {
