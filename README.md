@@ -1,5 +1,14 @@
-Infornography
-=============
+# Infornography
+
+<center>
+<img
+  alt="Infornography"
+  src="http://hnng.moe/f/Jc6" />
+</center>
+
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+
+> Lightweight screenfetch/archey replacement in Racket, only has features that are absolutely necessary.
 
 The problem? `screenfetch` is more than 3.8k standard lines of code.
 
@@ -7,7 +16,9 @@ There are window managers that are less than this. For a script which reports sy
 
 Furthermore, `screenfetch` is designed to function on a great variety of platforms, so it's not always immediately clear what code affects the platform you're currently running on.
 
-`infornography` aims to remedy this. It is to be written entirely in Scheme and target one, or very few, platforms. This way we avoid needing excessive code to deal with the quirks of the many operating systems and distributions in circulation.
+`infornography` aims to remedy this. It is to be written entirely in Racket and target one, or very few, platforms. This way we avoid needing excessive code to deal with the quirks of the many operating systems and distributions in circulation.
+
+## Background
 
 ### Why Racket?
 It's the most hackable language there is.
@@ -25,12 +36,29 @@ I might put some up somewhere in the future, maybe.
 ### Known issues/notes
 - See [Notes page](https://github.com/goodmind/Infornography/projects/1)
 
-<center>
-<img
-  alt="Infornography macOS"
-  src="http://hnng.moe/f/F21" />
-<img
-  alt="Infornography"
-  width="89%"
-  src="http://hnng.moe/f/F23" />
-</center>
+## Install
+
+### macOS
+
+You need [Homebrew](brew.sh) to install it
+    
+    $ brew tap goodmind/homebrew-wired
+    $ brew install infornography
+
+### Archlinux
+
+You can use [Yaourt](https://archlinux.fr/yaourt-en) or your preferred [AUR helper](https://wiki.archlinux.org/index.php/AUR_helpers)
+
+    $ yaourt -S infornography
+    
+## Usage
+
+    $ infornography
+
+## Contribute
+
+PRs accepted
+
+## License
+
+[MIT](LICENSE)
