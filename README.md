@@ -40,7 +40,7 @@ I might put some up somewhere in the future, maybe.
 
 ### macOS
 
-You need [Homebrew](brew.sh) to install it
+You need [Homebrew](https://brew.sh) to install it
     
     $ brew tap goodmind/homebrew-wired
     $ brew install infornography
