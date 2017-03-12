@@ -11,7 +11,7 @@ matrix:
     - os: osx
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update             ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install minimal-racket; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install racket; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/greghendershott/travis-racket.git; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat travis-racket/install-racket.sh | bash; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export PATH="${RACKET_DIR}/bin:${PATH}"; fi
