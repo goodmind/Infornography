@@ -48,18 +48,23 @@
                        (number->string total) "M")
                  "")))
 
-(define (os)
+(define (kernel)
   (string-trim (-> "uname -s")))
+
+(define (os)
+  (let* ((os-name (-> "sw_vers -productName")) 
+         (os-version (-> "sw_vers -productVersion")))
+    (string-join (map string-trim (list os-name os-version)))))
 
 (define data (list "
                   .......
               ...............           " ($ USER) "@" (hostname) "
             ....................        Shell: " ($ SHELL) "
           .........................     Memory: " (memory) "
-         ...........................    OS: " (os) "
-        .............................   Terminal: " ($ TERM) "
-       ...............................  CPU: " (cpu) "
-       ..............x................
+         ...........................    Kernel: " (kernel) "
+        .............................   OS: " (os) "
+       ...............................  Terminal: " ($ TERM) "
+       ..............x................  CPU: " (cpu) "
        ............xo@................
        ...........xoo@xxx.............
       ........o@oxxoo@@@@@@x..xx.....
